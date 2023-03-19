@@ -29,6 +29,31 @@ public class Run {
 	char[] g = {'m','m','f','f','f','f','f','m','m','f'};
 	int[] e = {18,18,20,25,27,19,23,45,21,35};
 	
+	//System.out.println(g3.g3e12(new float[] {3.5f,6.2f,5f,4.6f}));
+	
+	enum Tipo  {LUNES(10,"MONDAY"),MARTES(20,"TUESDAY"),MIERCOLES(30,"WEDNESDAY"),
+		JUEVES(40,"THURSDAY"),VIERNES(50,"FRIDAY"),SABADO(60,"SATURDAY"),DOMINGO(70,"SUNDAY");
+		
+		private int valor;
+		private String day;
+		
+		private Tipo(int valor, String day){
+		this.valor = valor;
+		this.day = day;}
+	};
+	
+	Tipo t = Tipo.LUNES;
+	
+	System.out.println("esp: "+t);
+	System.out.println("eng: "+t.day);
+	System.out.println("num: "+t.valor);
+	System.out.println("eng: "+Tipo.VIERNES.day);
+	//Tipo.DOMINGO.day = Tipo.LUNES.day;
+	
+	// estoy modificando el valor del tipo enum
+	Tipo.DOMINGO.day = "SABAD";
+	System.out.println("dom: "+Tipo.DOMINGO.day);
+	
 	
 	}
 	

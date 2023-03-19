@@ -159,7 +159,6 @@ public String g3e7(int n1, int n2) {
 	public int[] g3e9(int[] valores) {
 		
 		int[] cuentas = new int[4];
-		int sumaPares = 0;
 		
 		for(int n : valores) {
 			
@@ -212,8 +211,49 @@ public String g3e7(int n1, int n2) {
 		return datos;
 	}
 	
-	public String g3e11(String nombre, String departamento, float sueldo) {
+	// sueldos[] => 0: sueldo normal, 1: nuevo sueldo
+	public float[] g3e11(float sueldo) {
 		
-		return null;
+		float[] sueldos = new float[2];
+		float porciento = 0;
+		float nuevoSueldo = 0;
+		
+		if(sueldo > 1_800_000)	{		
+			
+			porciento = 2f/100;		
+		}
+		else if(sueldo > 1_300_000 && sueldo <= 1_800_000) {
+			
+			porciento = 5f/100;
+		}
+		else if(sueldo > 900_000 && sueldo <= 1_300_000) {
+			
+			porciento = 10f/100;
+			
+		}else {
+			
+			porciento = 20f/100;
+		}
+		
+		nuevoSueldo = sueldo + (sueldo * porciento);
+		
+		sueldos[0] = sueldo;
+		sueldos[1] = nuevoSueldo;
+		
+		return sueldos;
+			
+	}
+	
+	public float g3e12(float[] notas) {
+		
+		float sumas = 0;
+		float promedio = 0;
+		
+		for(float nota : notas)
+			sumas += nota;
+		
+		promedio = (float)sumas / notas.length;
+		
+		return promedio;
 	}
 }
