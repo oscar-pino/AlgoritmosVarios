@@ -53,7 +53,7 @@ public class Guia2 {
 		return (p1.trim().equalsIgnoreCase(p2.trim())) ? true : false;
 	}
 
-	// x[0] sueldo base, x[1] = horas extras, x[2] = sueldo bruto 
+	// x[] =>  0:sueldo base, 1: horas extras, 2: sueldo bruto 
 	public float[] g2e6(float horasTrabajadas, float valorHora) {
 
 		float horasExtras = 0;
@@ -85,7 +85,7 @@ public class Guia2 {
 		return r;		
 	}
 
-	// r[0] = original, r[1] = convertido
+	// r[] => 0:original, 1: convertido
 	public String g2e7(String monedaConvertir, float valorOrigen) {
 
 		float saldo = 0;
@@ -141,7 +141,7 @@ public class Guia2 {
 
 	}
 
-	// opcion => 1 = suma, 2 = resta, 3 = multiplicacion, 4 = division
+	// opcion => 1: suma, 2: resta, 3: multiplicacion, 4: division
 	public float g2e9(int opcion, float n1, float n2) {
 
 		float r = 0;
@@ -220,7 +220,7 @@ public class Guia2 {
 		return area;
 	}
 
-	// r[0] = +caracteres, r[1] = +caracteres, r[2] = iguales caracteres
+	// r[] => 0: p1 +caracteres, 1: p2 +caracteres, 2: iguales caracteres
 	public boolean[] g2e14(String p1, String p2) {
 		
 		boolean[] r = new boolean[3];		
@@ -236,7 +236,7 @@ public class Guia2 {
 		
 	}
 	
-	// r[0] = n1-mayor, r[1] = n2-mayor, r[2] = iguales caracteres
+	// r[] 0: n1-mayor, 1: n2-mayor, 2: iguales caracteres
 	public boolean[] g2e15(float n1, float n2) {
 		
 		boolean[] r = new boolean[3];		
@@ -251,7 +251,7 @@ public class Guia2 {
 		return r;
 	}
 	
-	// r[0] = a, r[1] = b, r[2] = c, r[3] = x1, r[4] = x2, r[5] = det
+	// r[] 0: a, 1: b, 2: c, 3: x1, 4: x2, 5: det
 	public float[] g2e16(float a, float b, float c) {
 			
 		float determinante = 0;
@@ -378,7 +378,7 @@ public class Guia2 {
 		return (valor % 3 == 0 && valor % 2 == 0)?true:false;
 	}
 	
-	// datos[0] = a ,datos[1] = b ,datos[2] = c ,datos[3] = d ,datos[4] = e ,datos[5] = f ,
+	// datos[] => 0: a ,1: b ,2: c ,3: d ,4: e ,5: f
 	public String g2e21(float[] datos) {
 		
 		float x = 0;

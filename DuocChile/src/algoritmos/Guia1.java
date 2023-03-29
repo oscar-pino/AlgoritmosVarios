@@ -12,7 +12,7 @@ public class Guia1 {
 		return (float)(Math.PI*Math.pow(radio, 2));
 	}
 	
-	// r[0] = suma, r[1] = resta, r[2] = multiplicacion, r[3] = division
+	// r[] => 0: suma, 1: resta, 2: multiplicacion, 3: division
 	public float[] g1e3(float n1, float n2) {
 		
 		float[] r = new float[4];
