@@ -2,27 +2,26 @@ package algoritmos;
 
 import java.util.ArrayList;
 
+import entidad.Empleado;
+import entidad.Persona;
+
 public class Guia3 {
 
 	public String g3e1() {
-
-		String r = "";
+		
 		int c = 0;
 
-		for (int i = 100; i < 251; i++) {
-
-			if (i % 2 == 0) {
-
-				if (i < 250)
-					r += (i + ", \n");
-				else
-					r += i;
-
+		String r = "\nvalores pares en el rango (100-250):\n《 ";
+		
+		for (int i = 100; i <= 250; i++) 
+			if(i%2==0) {
+				r+=(i)+",";
 				c++;
 			}
-		}
 
-		r += "\ncantidad de pares: " + c;
+		r = r.substring(0, r.length()-1)+" 》\n";
+		r+="cantidad de valores pares en el rango: "+c;
+		
 		return r;
 	}
 
@@ -31,8 +30,11 @@ public class Guia3 {
 		String r = "";
 		int inicio = n1;
 		int fin = n2;
-		int c = 0;
-
+		int c = 0;	
+		String temp = "("+inicio+"~"+fin+")";
+		
+		r += "\nvalores impares en el rango "+temp+":\n《 ";
+		
 		if (n1 > n2) {
 
 			inicio = n2;
@@ -44,41 +46,39 @@ public class Guia3 {
 			if (i % 2 != 0) {
 
 				if (i <= fin)
-					r += (i + ", \n");
+					r += (i + ", ");
 				c++;
 			}
 		}
 
-		r = r.substring(0, r.length() - 3);
-		r += "\nrango [" + ((inicio > fin) ? fin : inicio) + " | " + ((fin > inicio) ? fin : inicio)
-				+ "] cantidad de numeros impares ingresados: " + c;
+		r = r.substring(0, r.length() - 2)+ " 》\ncantidad de valores impares en el rango "+temp+": " + c;
 		return r;
 	}
 
 	public String g3e3() {
 
-		String r = "";
+		String r = "\n《 ";
 		int c = 0;
 
 		for (int i = 11; i <= 11 * 25; i += 11) {
-			r += (i + ",\n");
+			r += (i + ", ");
 			c++;
 		}
 
-		return r.substring(0, r.length() - 2) + "\nmultiplos de 11 contabilizados: " + c;
+		return r.substring(0, r.length() - 2) + " 》\nmultiplos de 11 contabilizados: " + c;
 	}
 
 	public String g3e4() {
 
-		String r = "";
+		String r = "\n《 ";
 		int c = 0;
 
 		for (int i = 8; i <= 500; i += 8) {
-			r += (i + ",\n");
+			r += (i + ", ");
 			c++;
 		}
 
-		return r.substring(0, r.length() - 2) + "\nmultiplos de 8 contabilizados: " + c;
+		return r.substring(0, r.length() - 2) + " 》\nmultiplos de 8 contabilizados: " + c;
 	}
 
 	public float g3e5(ArrayList<Float> alturas) {
@@ -95,14 +95,14 @@ public class Guia3 {
 
 		String respuesta = "";
 
-		respuesta = "***************\n";
+		respuesta = "----------------\n";
 
 		for (int i = 1; i < 21; i++) {
 
 			respuesta += tabla + " * " + i + " = " + (i * tabla) + "\n";
 		}
 
-		respuesta += "***************";
+		respuesta += "----------------";
 
 		return respuesta;
 	}
@@ -113,7 +113,9 @@ public class Guia3 {
 		int inicio = n1;
 		int fin = n2;
 		int c = 0;
-
+		String temp = "("+inicio+"~"+fin+")";
+		
+		r += "valores multiplos de 3 en el rango "+temp+":\n《 ";
 		if (n1 > n2) {
 
 			inicio = n2;
@@ -125,23 +127,24 @@ public class Guia3 {
 			if (i % 3 == 0 && i != 0) {
 
 				if (i <= fin)
-					r += (i + ", \n");
+					r += (i + ", ");
 
 				c++;
 			}
 		}
 
-		r = r.substring(0, r.length() - 3);
-		r += "\nrango [" + ((inicio > fin) ? fin : inicio) + " | " + ((fin > inicio) ? fin : inicio)
-				+ "] cantidad de multiplos de 3: " + c;
+		r = r.substring(0, r.length() - 2)+ " 》\ncantidad de valores multiplos de 3 : "+ c;
+
 		return r;
 	}
 
 	// cantidades[] => 0: agudo, 1: concavo, 2: llano, 3: obtuso, 4: recto
-	public int[] g3e8(float angulo) {
+	public float[] g3e8(ArrayList<Float> angulos) {
 
-		int[] cantidades = new int[5];
+		float[] cantidades = new float[5];
 
+		for(float angulo : angulos) {
+		
 		if (angulo > 180 && angulo < 360)
 			cantidades[1]++;
 		else if (angulo == 180)
@@ -152,17 +155,18 @@ public class Guia3 {
 			cantidades[4]++;
 		else
 			cantidades[0]++;
+		}
 
 		return cantidades;
 
 	}
 
 	// cuentas[] => 0: negativos, 1: positivos, 2: multiplos de 15, 3: suma de pares
-	public int[] g3e9(int[] valores) {
+	public float[] g3e9(float[] valores) {
 
-		int[] cuentas = new int[4];
+		float[] cuentas = new float[4];
 
-		for (int n : valores) {
+		for (float n : valores) {
 
 			if (n < 0)
 				cuentas[0]++;
@@ -179,70 +183,80 @@ public class Guia3 {
 
 		return cuentas;
 	}
-
+	
 	// datos[] => 0: cantidad de ingresados, 1: hombres ingresados, 2: mujeres
-	// ingresadas, 3: promedio edad ingresados, 4: promedio edad hombres, 5:
-	// promedio edad mujeres
-	public float[] g3e10(int[] edad, char[] genero) {
-
+		// ingresadas, 3: promedio edad ingresados, 4: promedio edad hombres, 5:
+		// promedio edad mujeres
+	public float[] g3e10(ArrayList<Persona> personas) {
+		
 		// edades[] => 0: edad general, 1: edad hombres, 2: edad mujeres
-		float[] edades = new float[3];
-		float[] datos = new float[6];
+				float[] edades = new float[3];
+				float[] datos = new float[6];
+				boolean[] existenGeneros = new boolean[2]; // 0: hombre, 1: mujer
 
-		for (int i = 0; i < edad.length; i++) {
+				for (Persona p : personas) {
 
-			if (edad[i] >= 18) {
+					if (p.getEdad() >= 18) {
 
-				datos[0]++;
+						datos[0]++;
 
-				if (genero[i] == 'm') {
-					datos[1]++;
-					edades[1] += edad[i];
-				} else if (genero[i] == 'f') {
-					datos[2]++;
-					edades[2] += edad[i];
+						if (p.getGenero() == 'm') {
+							datos[1]++;
+							edades[1] += p.getEdad();
+							existenGeneros[0] = true;
+						} else {
+							datos[2]++;
+							edades[2] += p.getEdad();
+							existenGeneros[1] = true;
+						}
+
+						edades[0] += p.getEdad();					
+					}
 				}
+				datos[3] = (edades[0] / personas.size());
+				datos[4] = (existenGeneros[0])?(edades[1] / datos[1]):0;
+				datos[5] = (existenGeneros[1])?(edades[2] / datos[2]):0;
 
-				edades[0] += edad[i];
-
-			}
-		}
-		datos[3] = (edades[0] / edad.length);
-		datos[4] = (edades[1] / datos[1]);
-		datos[5] = (edades[2] / datos[2]);
-
-		return datos;
+				return datos;
 	}
 
-	// sueldos[] => 0: sueldo normal, 1: nuevo sueldo
-	public float[] g3e11(float sueldo) {
+	// datos[] => 0: sueldo normal, 1: nuevo sueldo, 2: RR.HH, 3: contabilidad, 4: informatica
+	public float[] g3e11(ArrayList<Empleado> empleados) {
 
-		float[] sueldos = new float[2];
-		float porciento = 0;
-		float nuevoSueldo = 0;
-
-		if (sueldo > 1_800_000) {
-
-			porciento = 2f / 100;
-		} else if (sueldo > 1_300_000 && sueldo <= 1_800_000) {
-
-			porciento = 5f / 100;
-		} else if (sueldo > 900_000 && sueldo <= 1_300_000) {
-
-			porciento = 10f / 100;
-
-		} else {
-
-			porciento = 20f / 100;
-		}
-
-		nuevoSueldo = sueldo + (sueldo * porciento);
-
-		sueldos[0] = sueldo;
-		sueldos[1] = nuevoSueldo;
-
-		return sueldos;
-
+		float[] datos = new float[5];
+		int[] aumentos = {20,10,5,2};
+		float aumento = 0;
+		
+		for(Empleado e : empleados ) {
+			
+			datos[0] += e.getSueldo();
+			
+			if(e.getSueldo() <= 900_000)
+				aumento = e.getSueldo()*(aumentos[0]/(float)100);
+			else if(e.getSueldo() <= 1_300_000)
+				aumento = e.getSueldo()*(aumentos[1]/(float)100);
+			else if(e.getSueldo() <= 1_800_000)
+				aumento = e.getSueldo()*(aumentos[2]/(float)100);
+			else
+				aumento = e.getSueldo()*(aumentos[3]/(float)100);	
+			
+			datos[1] += e.getSueldo() + aumento;
+			
+			switch(e.getDepartamento().toLowerCase()) {
+			
+			case "rr.hh":
+				datos[2]++;
+				break;
+			case "contabilidad":
+				datos[3]++;
+				break;
+			case "informatica":
+				datos[4]++;
+				break;
+			}
+		}		
+		
+		return datos;
 	}
 
 	public float g3e12(float[] notas) {
@@ -259,29 +273,24 @@ public class Guia3 {
 	}
 
 	// datos[] => 0: grados convertidos, 1: cantidad celsius, 2: cantidad fahrenheit
-	public float[] g3e13(String[] tipoGrados, float[] cantidadGrados) {
+	public float g3e13(int tipo, float cantidadGrados) {
 
-		float[] datos = new float[3];
+		float resultado = 0;
 
-		for (int i = 0; i < tipoGrados.length; i++) {
+		if (tipo == 1) { // grados celsius
 
-			if (tipoGrados[i].equalsIgnoreCase("celsius")) {
+			resultado = (9f / 5) * cantidadGrados + 32;
 
-				datos[0] = (9f / 5) * cantidadGrados[i] + 32;
-				datos[1]++;
+		} else if (tipo == 2) { // grados fahrenheit
 
-			} else if (tipoGrados[i].equalsIgnoreCase("fahrenheit")) {
-
-				datos[0] = (cantidadGrados[i] - 32) * (5f / 9);
-				datos[2]++;
-			}
+			resultado = (cantidadGrados - 32) * (5f / 9);
 		}
 
-		return datos;
+		return resultado;
 	}
 
 	// lluviaEnZona[] => 0: zonaA, 1: zonaB, 2: zonaC, 3: zona4, 4: sinLluviaA, 5:
-	// sinLluviaB, 6: sinLluviaC, 5: sinLluviaD
+	// sinLluviaB, 6: sinLluviaC, 7: sinLluviaD
 	public float[] g3e14(float[][] zonas) {
 
 		float[] lluviaEnZona = new float[8];
@@ -309,51 +318,51 @@ public class Guia3 {
 		return lluviaEnZona;
 	}
 
-	// datos[] => 0: saldo de ventas(1), 1: saldo de ventas(2), 2: saldo de
-	// ventas(3), 3: cantidad de ventas(1), 4: cantidad de ventas(2), 5: cantidad de
-	// ventas(3), 6: saldo final
-	public long[] g3e15(int[] tipo, float[] cantidadHectareas) {
+	// datos[] => 0: cantidad de ventas 1: recaudado tipo 1, 2: recaudado tipo 2, 3: recaudado tipo 3, 4: monto total recaudado
+	public long[] g3e15(ArrayList<float[]> fulmigaciones) {
 
 		float porciento = 0;
-		long[] datos = new long[7];
+		long[] datos = new long[5];
 		float[] tarifas = { 5_000f, 10_000f, 15_000f };
 		float saldoTemporal = 0;
-
-		for (int i = 0; i < tipo.length; i++) {
-
-			if (cantidadHectareas[i] > 500) {
-
+		int c = 0;
+		int tipo = 0;
+		float hectareas = 0;
+		
+		datos[0] = fulmigaciones.size();
+		
+		for(float[] x : fulmigaciones) {
+			
+			tipo = (int)x[0];
+			hectareas = x[1];
+			saldoTemporal = 0;
+			porciento = 0;
+			
+			if (hectareas > 500) 
 				porciento = 15f / 100f;
-			} else if (cantidadHectareas[i] > 300) {
-
+			else if (hectareas > 300) 
 				porciento = 10f / 100f;
-			} else if (cantidadHectareas[i] > 100) {
-
-				porciento = 5f / 100f;
-			}
-
-			switch (tipo[i]) {
+			else if (hectareas > 100) 
+				porciento = 5f / 100f;				
+			
+			switch (tipo) {
 
 			case 1:
-				saldoTemporal = tarifas[0] * cantidadHectareas[i];
-				datos[0] += (saldoTemporal - (saldoTemporal * porciento));
-				datos[3]++;
+				saldoTemporal = tarifas[0] * (float)hectareas;
+				datos[1] += saldoTemporal - saldoTemporal * porciento;
 				break;
 			case 2:
-				saldoTemporal = tarifas[1] * cantidadHectareas[i];
-				datos[1] += (saldoTemporal - (saldoTemporal * porciento));
-				datos[4]++;
+				saldoTemporal = tarifas[1] * (float)hectareas;
+				datos[2] += saldoTemporal - saldoTemporal * porciento;
 				break;
 			case 3:
-				saldoTemporal = tarifas[2] * cantidadHectareas[i];
-				datos[2] += (saldoTemporal - (saldoTemporal * porciento));
-				datos[5]++;
+				saldoTemporal = tarifas[2] * (float)hectareas;
+				datos[3] += saldoTemporal - saldoTemporal * porciento;
 				break;
-			}
-
-		}
-		datos[6] = (datos[0] + datos[1] + datos[2]);
-
+			}						
+		}				
+		datos[4] = datos[1] + datos[2] + datos[3];
+		
 		return datos;
 	}
 
@@ -381,9 +390,8 @@ public class Guia3 {
 		return datos;
 	}
 
-	// datos[] 0: sueldo a pagar, 1: empleados con horas extras, 2: promedio de
-	// horas extras
-	public float[] g3e17(float[] horasTrabajadas, float[] valorHora) {
+	// datos[] 0: sueldo a pagar, 1: empleados con horas extras, 2: promedio de horas extras	
+	public float[] g3e17(ArrayList<Empleado> empleados){
 
 		final int HORAS_LEGALES = 180;
 		float[] datos = new float[3];
@@ -391,57 +399,61 @@ public class Guia3 {
 		float horasExtras = 0;
 		float adicional = 0;
 
-		for (int i = 0; i < horasTrabajadas.length; i++) {
+		for (Empleado e : empleados) {
 			
-			if (horasTrabajadas[i] > HORAS_LEGALES) {
+			if (e.getHorastrabajadas() > HORAS_LEGALES) {
 
-				horasExtras = horasTrabajadas[i] - HORAS_LEGALES;
+				horasExtras = e.getHorastrabajadas() - HORAS_LEGALES;
 				sumaHorasExtras += horasExtras;
 				datos[1]++;
 				
-				adicional = (float)horasExtras * valorHora[i] * 2;
+				adicional = (float)horasExtras * e.getValorHora() * 2;
 				
-				datos[0] += (float) (HORAS_LEGALES * valorHora[i] + adicional);
+				datos[0] += (float) (HORAS_LEGALES * e.getValorHora() + adicional);
 			}
 			else {
 				
-				datos[0] += (float) (horasTrabajadas[i] * valorHora[i]);
-			}
-
-			
+				datos[0] += (float) (e.getHorastrabajadas() * e.getValorHora());
+			}			
 		}		
 
 		datos[2] = (float) sumaHorasExtras / datos[1];
 
 		return datos;
-	}
+	}	
 	
-	// r[] => 0: si(1) no(2), 1: cateto A, 2: cateto B, 3: hipotenusa
-	public double[][] g3e18(double[][] triangulos) {
-		
-		int filas = triangulos.length;
-		double[][] r = new double[filas][4];
-		int verificado = 0;
-		double catetoA = 0; 
-		double catetoB = 0; 
-		double hipotenusa = 0; 
-		
-		for(int i=0;i<triangulos.length;i++) {
+	public ArrayList<float[]> g3e18(float[][] triangulos) {
+
+		ArrayList<float[]> resultados = new ArrayList<float[]>();
+		float ca=0, cb=0, hp=0;
+		int c = 0;
+		int cont = 0;		
 			
-			verificado = 0;			
-			catetoA = Math.pow(triangulos[i][0], 2);
-			catetoB = Math.pow(triangulos[i][1], 2);
-			hipotenusa = Math.pow(triangulos[i][2], 2);			
+			for(float[] triangulo : triangulos) {
+				
+				for(float cateto : triangulo) {
 					
-			if(catetoA+catetoB == hipotenusa)
-				verificado = 1;
-			
-			r[i][0] = verificado;
-			r[i][1] = catetoA;
-			r[i][2] = catetoB;
-			r[i][3] = hipotenusa;
-		}
-		
-		return r;
+					if(c == 0)
+						ca = cateto;
+					else if(c == 1)
+						cb = cateto;
+					else
+						hp = cateto;	
+					
+				if(ca != 0 && cb != 0 && hp != 0)
+					if(Math.pow(ca, 2)+Math.pow(cb, 2)==Math.pow(hp, 2)) {					
+						resultados.add(new float[]{(float)cont,ca,cb,hp});
+					}
+				
+				c++;
+					
+					if(c == 3)
+						c = 0;				
+				}
+				
+				cont++;
+			}
+
+		return resultados;
 	}
 }

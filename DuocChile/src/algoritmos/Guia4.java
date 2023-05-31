@@ -40,15 +40,20 @@ public class Guia4 {
 	}
 
 	// datos[] => 0: nombre, 1: peso, 2: altura
-	public String[][] g4e3(Persona[] personas) {
+	public float[] g4e3(String[] nombres, float[] pesos, float[] alturas){//Persona[] personas) {
 
-		String[][] datos = new String[10][3];
+		float[] datos = new float[2];
+		float promedioPeso = 0;
+		float promedioEstatura = 0;
 
-		for (int i = 0; i < personas.length; i++) {
-			datos[i][0] = personas[i].getNombre();
-			datos[i][1] = String.valueOf(personas[i].getPesoKg());
-			datos[i][2] = String.valueOf(personas[i].getAlturaMt());
+		for (int i = 0; i < nombres.length; i++) {			
+			
+			promedioPeso += pesos[i];
+			promedioEstatura += alturas[i];
 		}
+		
+		datos[0] = (float)promedioPeso / pesos.length;
+		datos[1] = (float)promedioEstatura / alturas.length;
 
 		return datos;
 	}
@@ -63,22 +68,32 @@ public class Guia4 {
 		return r;
 	}
 
-	// nombre, edad, horasTrabajadas, valorHora
-	public Empleado[] g4e5(Empleado[] empleados) {
+	// datos[] => 0: sueldos totales, 1: nombre, 2: sueldoEmpleado, 3: edad
+	public String[] g4e5(ArrayList<Empleado> empleados) {
 		
-		Empleado[] calculados = empleados;
+		float totalSueldos = 0;
+		float sueldoMayor = 0;
+		String[] datos = new String[4];
+		int id = 0;
 		
-		int i = 0;
-		
-		for(Empleado emp : calculados) {
+		for(int i=0;i<empleados.size();i++) {		
 			
-			emp.setSueldo(obtenerSueldo(emp.getHorastrabajadas(), emp.getValorHora()));
+			empleados.get(i).setSueldo(obtenerSueldo(empleados.get(i).getHorastrabajadas(), empleados.get(i).getValorHora()));
 			
-			if(emp.getHorastrabajadas() > 180)
-				emp.setHorasExtras(emp.getHorastrabajadas() - 180);
-			i++;
+			if(empleados.get(i).getSueldo() > sueldoMayor) {
+				sueldoMayor = empleados.get(i).getSueldo();
+				id = i;
+			}
+			
+			totalSueldos += empleados.get(i).getSueldo();
 		}
-	return calculados;
+		
+		datos[0] = String.valueOf(totalSueldos);
+		datos[1] = empleados.get(id).getNombre();
+		datos[2] = String.valueOf(empleados.get(id).getSueldo());
+		datos[3] = String.valueOf(empleados.get(id).getEdad());
+		
+	return datos;
 
 	}
 
@@ -142,7 +157,7 @@ public class Guia4 {
 		return valores;
 	}
 
-	private float obtenerSueldo(float horasTrabajadas, float valorHora) {
+	public float obtenerSueldo(float horasTrabajadas, float valorHora) {
 
 		float horasExtras = 0;
 		float sueldo = 0;
