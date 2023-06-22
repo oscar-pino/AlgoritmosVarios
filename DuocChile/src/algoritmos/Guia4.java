@@ -123,38 +123,47 @@ public class Guia4 {
 		return magico;
 	}
 	
-	public ArrayList<float[]> g4e7(int[][] cantidades) {
+	public int[][] g4e7(int[][] valores) {
+
+		int filaAntigua = valores.length;
+		int columnaAntigua = valores[0].length;
+		int filaNueva = filaAntigua+1;
+		int columnaNueva = columnaAntigua+1;
+		int[][] resultados = new int[filaNueva][columnaNueva];
+		int i = 0;
+		int j = 0;
+		int valorFila = 0;
+		int valorColumna = 0;
 		
-		float[] sumaPromedios = new float[cantidades.length];
-		float[] promedios = new float[cantidades.length];
-		float[] turnos = new float[cantidades[0].length];
-		ArrayList<float[]> valores = new ArrayList<float[]>();	
+		for (i = 0; i < filaAntigua; i++) {
+
+			for (j = 0; j < columnaAntigua; j++) {
+
+				// llenando matriz nueva, con los valores de matriz antigua
+				resultados[i][j] = valores[i][j];
+				
+				// sumando valores individuales de cada fila
+				resultados[i][columnaAntigua] += resultados[i][j];				
+				
+				// sumando valores individuales de cada columna
+				resultados[filaAntigua][j] += resultados[i][j];
+				
+				// total de valores individuales de cada fila
+				if(j == columnaAntigua-1)
+					valorFila += resultados[i][columnaAntigua];
+				
+				// total de valores individuales de cada columna
+				if(i == filaAntigua-1)
+					valorColumna += resultados[filaAntigua][j];				
+			}			
+		}	
 		
-		for(int i=0;i<cantidades.length;i++) {
+		if(valorFila == valorColumna)
+			resultados[filaAntigua][columnaAntigua] = valorColumna;
+		else
+			resultados[filaAntigua][columnaAntigua] = -1;
 			
-			for(int j=0;j<cantidades[0].length;j++) {					
-				
-				if(j==0)
-				turnos[0] += cantidades[i][0];
-				
-				if(j==1)
-				turnos[1] += cantidades[i][1];
-				
-				if(j==2)
-				turnos[2] += cantidades[i][2]; 
-				
-				sumaPromedios[i] += cantidades[i][j];				
-			}
-		}
-		
-		for(int k=0;k<sumaPromedios.length;k++)
-			promedios[k] = sumaPromedios[k] / 3f;			
-			
-			valores.add(promedios);
-			valores.add(turnos);
-			
-		
-		return valores;
+		return resultados;
 	}
 
 	public float obtenerSueldo(float horasTrabajadas, float valorHora) {

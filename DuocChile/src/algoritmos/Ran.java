@@ -1,70 +1,158 @@
 package algoritmos;
 
-import java.util.ArrayList;
+import java.io.BufferedInputStream;
+import java.io.BufferedOutputStream;
+import java.io.IOException;
+import java.nio.charset.Charset;
 import java.util.Arrays;
+import java.util.Locale;
 import java.util.Random;
 import java.util.Scanner;
 
 public class Ran {
 
-	private static Scanner in = new Scanner(System.in);
+	private static Scanner in = new Scanner(System.in);//, "UTF-8");
 	private int og, oe;
 	private String rta;
 	private int n1, n2, rdo;
+	private static Random rd = new Random();
 
-	public static void main(String[] args) {
+	public static void main(String[] args) throws IOException {
 
-		Ran r = new Ran();
-		Random rd = new Random();
-		String temp;
 		System.out.println();
+		int fila = 8;
+		int columna = 3;
+		int[][] entradas = new int[fila][columna]; // 4 - 3
+		int c = 0;
+		String re = "";
 		
-		Scanner ent = new Scanner(System.in);
 		
-		System.out.print("este es el nombre capturado: ");
-		temp = ent.nextLine();
-		
-		System.out.println("el valor capturado es: "+temp);
-	
-		
+for(int i=33;i<256;i++)
+	System.out.println(i+" = "+(char)i);
+
+
+
 	}
-	
-	public static float[][] aleatorio(){
+
+	public static void mostrar(int[][] entradas) {
 		
+		String re = "\n";
+
+		for (int i = 0; i < entradas.length; i++) {
+
+			for (int j = 0; j < entradas[0].length; j++) {
+				
+				re += "[" + entradas[i][j] + "] ";
+			}
+			re += "\n";
+		}
+		System.out.println(re.substring(0, re.length()-2));
+	}
+
+	public static int[][] g4e7(int[][] valores) {
+
+		int filaAntigua = valores.length;
+		int columnaAntigua = valores[0].length;
+		int filaNueva = filaAntigua+1;
+		int columnaNueva = columnaAntigua+1;
+		int[][] resultados = new int[filaNueva][columnaNueva];
+		int i = 0;
+		int j = 0;
+		int valorFila = 0;
+		int valorColumna = 0;
+		
+		for (i = 0; i < filaAntigua; i++) {
+
+			for (j = 0; j < columnaAntigua; j++) {
+
+				// llenando matriz nueva, con los valores de matriz antigua
+				resultados[i][j] = valores[i][j];
+				
+				// sumando valores individuales de cada fila
+				resultados[i][columnaAntigua] += resultados[i][j];				
+				
+				// sumando valores individuales de cada columna
+				resultados[filaAntigua][j] += resultados[i][j];
+				
+				// total de valores individuales de cada fila
+				if(j == columnaAntigua-1)
+					valorFila += resultados[i][columnaAntigua];
+				
+				// total de valores individuales de cada columna
+				if(i == filaAntigua-1)
+					valorColumna += resultados[filaAntigua][j];				
+			}			
+		}			
+		
+		System.out.println("\nValor_fila: "+valorFila+" Valor_columna: "+valorColumna);
+		
+		if(valorFila == valorColumna)
+			resultados[filaAntigua][columnaAntigua] = valorColumna;
+		else
+			resultados[filaAntigua][columnaAntigua] = -1;
+			
+		return resultados;
+	}
+
+	public static float[][] aleatorio() {
+
 		Random rd = new Random();
 		float[][] x = new float[4][7];
 		int n = 0;
 		System.out.println();
-		for(int i=0;i<x.length;i++) {
-			
-			for(int j=0;j<x[0].length;j++) {
-				
+		for (int i = 0; i < x.length; i++) {
+
+			for (int j = 0; j < x[0].length; j++) {
+
 				n = rd.nextInt(100);
-				
-				x[i][j] = n * (n/100f);
-				
+
+				x[i][j] = n * (n / 100f);
+
 			}
-			
+
 		}
 		return x;
 	}
-	
+
+	public static int[] generados() {
+
+		int cantidad = 9;
+		int[] aleatorios = new int[cantidad];
+		int alea = 0;
+		int c = 0;
+
+		for (int i = 0; i < 9; i++) {
+
+			do {
+
+				alea = in.nextInt();
+				aleatorios[alea] = i;
+				c++;
+			} while (c < i);
+
+		}
+
+		System.out.println("\n");
+
+		return aleatorios;
+	}
+
 	public boolean isNum(String x) {
-		
+
 		try {
 			Float.parseFloat(x);
-			return true;			
-			
-		}catch(Exception e) {
-			
+			return true;
+
+		} catch (Exception e) {
+
 			return false;
 		}
 	}
-	
+
 	public void mensaje(String tipo) {
-		
-		switch(tipo) {
-		
+
+		switch (tipo) {
+
 		case "numero":
 			System.out.print("\ningrese nuevo numero: ");
 			break;
@@ -76,118 +164,115 @@ public class Ran {
 			break;
 		}
 	}
-	
+
 	public Number validando(String valor, String tipo) {
-		
-		String pido = valor;	
+
+		String pido = valor;
 		Number n = null;
-			
-			while(!isNum(pido)) {
-				
-				mensaje("numero");
-				pido = in.next();
-				
-			}
-			
-			if(pido.contains("."))
-				n = Float.parseFloat(pido);			
-			else
-				n = Integer.parseInt(pido);
-					
-			
-			return n;		
+
+		while (!isNum(pido)) {
+
+			mensaje("numero");
+			pido = in.next();
+
+		}
+
+		if (pido.contains("."))
+			n = Float.parseFloat(pido);
+		else
+			n = Integer.parseInt(pido);
+
+		return n;
 	}
-	
+
 	public Number validando(String valor, Number inicio, Number fin, String tipo) {
-		
+
 		String recupero = valor;
 		Number retorno = null;
 		Number a;
 		Number z;
-		
-		if(inicio != null && fin != null) {
-			
+
+		if (inicio != null && fin != null) {
+
 			do {
-				
+
 				retorno = validando(recupero, tipo);
-				
-				if(inicio instanceof Float) {
-					a = (float)inicio;
-					z = (float)fin;
-				}else {
-					
-					a = (int)inicio;
-					z = (int)fin;
+
+				if (inicio instanceof Float) {
+					a = (float) inicio;
+					z = (float) fin;
+				} else {
+
+					a = (int) inicio;
+					z = (int) fin;
 				}
-				
-				if((float)retorno < (float)a || (float)retorno > (float)z) {
-					
-					System.out.println("debe ingresar un rango valido ["+a+"-"+z+"]");
-					
+
+				if ((float) retorno < (float) a || (float) retorno > (float) z) {
+
+					System.out.println("debe ingresar un rango valido [" + a + "-" + z + "]");
+
 				}
-				
-			}while((float)retorno < (float)inicio || (float)retorno > (float)fin);
-			
+
+			} while ((float) retorno < (float) inicio || (float) retorno > (float) fin);
+
 		}
-		
+
 		return retorno;
 	}
-	
+
 	public static void miLlenado() {
-		
-		int longitud  = 30;
-		int[] indices =  new int[longitud];
-		int[] arreglo =  new int[longitud];
+
+		int longitud = 30;
+		int[] indices = new int[longitud];
+		int[] arreglo = new int[longitud];
 		Random rd = new Random();
-		int j, c = 0, n;		
-		
-		
-		for(int i = 0; i<longitud;i++)
+		int j, c = 0, n;
+
+		for (int i = 0; i < longitud; i++)
 			indices[i] = i;
-		
+
 		System.out.println("indices: ");
-		for(int i : indices)
-			System.out.print("["+i+"]");
-		
+		for (int i : indices)
+			System.out.print("[" + i + "]");
+
 		do {
-			
-			n = rd.nextInt(longitud);		
-			
-			for(j=0;j<c;j++) {
-				
-				 if (arreglo[j] == n) // evitando repetir números en arreglo generado
-                     break;
+
+			n = rd.nextInt(longitud);
+
+			for (j = 0; j < c; j++) {
+
+				if (arreglo[j] == n) // evitando repetir números en arreglo generado
+					break;
 			}
-			
-			 if (j == c)   
-                 arreglo[c++] = n;
-               
-			
-		}while(c < longitud);
-		
+
+			if (j == c)
+				arreglo[c++] = n;
+
+		} while (c < longitud);
+
 		System.out.println("\ngenerados: ");
-		for(int k : arreglo)
-			System.out.print("["+k+"]");
-		
+		for (int k : arreglo)
+			System.out.print("[" + k + "]");
+
 		System.out.println("\n\nordenados: ");
 		Arrays.sort(arreglo);
-		for(int l : arreglo)
-			System.out.print("["+l+"]");
-		
+		for (int l : arreglo)
+			System.out.print("[" + l + "]");
+
 		System.out.println("\n\ndesordenados: ");
 		Arrays.sort(arreglo);
-		for(int l = arreglo.length; l>-1; l--)
-			System.out.print("["+l+"]");
-		
+		for (int l = arreglo.length; l > -1; l--)
+			System.out.print("[" + l + "]");
+
 	}
-	
+
 	public static String chars(int longitud) {
-		
+
 		String x = "";
-		
-		for(int i=0;i<longitud;i++)
+
+		for (int i = 0; i < longitud; i++)
 			x += "*";
-		
+
 		return x.trim();
 	}
 
@@ -488,12 +573,12 @@ public class Ran {
 			System.out.print(" Ingrese Indice: ");
 			indice = Integer.parseInt(in.nextLine());
 
-			//System.out.print(" Ingrese valor del indice: ");
-			//valorEnIndice = Integer.parseInt(in.nextLine());
+			// System.out.print(" Ingrese valor del indice: ");
+			// valorEnIndice = Integer.parseInt(in.nextLine());
 
 			System.out.println("------------------------------------------------");
 			System.out.println("Indice ingresado: " + indice);
-			//System.out.println(" Valor asociado al indice :" + valorEnIndice);
+			// System.out.println(" Valor asociado al indice :" + valorEnIndice);
 
 			int arreglo[] = new int[limite];
 
@@ -512,7 +597,7 @@ public class Ran {
 				int i, n = rand.nextInt(limite);
 
 				for (i = 0; i < contador; i++) {
-					
+
 					if (arreglo[i] == n) // quitando valores repetidos
 						break;
 				}
@@ -521,16 +606,16 @@ public class Ran {
 					arreglo[contador++] = n;
 
 			} while (contador < limite);
-			
+
 			System.out.println("\n\nValores");
 
 			for (int n : arreglo) {
 				System.out.print("[" + (n) + "]" + " ");
 			}
-			
+
 			System.out.print(" \n\nIngrese valor del indice: ");
 			valorEnIndice = Integer.parseInt(in.nextLine());
-			
+
 			System.out.println("Valor asociado al indice :" + valorEnIndice);
 			System.out.println("");
 
@@ -549,7 +634,7 @@ public class Ran {
 				continuar = false;
 
 			} else {
-				
+
 				System.out.println("Indice " + indice + " No correponde al valor " + arreglo[indice]);
 				System.out.println("");
 				System.out.println("	########  ######## ########  ########  ####  ######  ######## ######## ");
