@@ -21,7 +21,7 @@ import entidades.guias.Guia4;
 public class Run {
 
 	private int opcionGuia, opcionEjercicio, inicioMenu, finMenu, inicioEjercicio, finEjercicio;
-	private String respuesta, tipoOpcion, temp, mensaje;
+	private String respuesta, temp;
 	private boolean continuarJuego, continuarGuia, continuarEjercicio, resultadoCorrecto, menusActivos[];
 	private float entradas[], resultados[];
 	private float entradaUnica, resultadoUnico, rangoInicial, rangoFinal;
@@ -52,13 +52,13 @@ public class Run {
 
 		do {
 
-			if (r.opcionGuia == 5) {
+			if (r.opcionGuia == 5) {	
 				
-				
+				if(r.menusActivos[0])
+					r.menusActivos[0] = false;
 
 				do {
-
-					r.menusActivos[0] = true;
+					
 					r.opcionVarios = OpcionesTipo.SALIR_APLICACION;
 					r.validarRespuesta();
 
@@ -83,7 +83,7 @@ public class Run {
 							+ r.finMenu + "]\n*****************************\n");
 				}
 
-				else if (r.opcionGuia == 0) {
+				else {
 					r.continuarGuia = true;
 					r.opcionEjercicio = 0;
 					r.menusActivos[0] = true;
@@ -95,35 +95,41 @@ public class Run {
 
 				r.inicioEjercicio = r.inicioMenu;
 				r.finEjercicio = r.obtenerFinalEjercicio();
+				r.menusActivos[0] = false;
 
-				while (r.continuarGuia) {
+				do {
 
-					if (r.opcionEjercicio == 0) {
-						r.menusActivos[0] = false;
-						r.menusActivos[1] = true;
-						r.opcionVarios = OpcionesTipo.OPCION_EJERCICIO;
-						r.solicitarOpcion(r.opcionVarios);
+					 if (r.opcionEjercicio == r.finEjercicio) {					 
+						
+						if(r.menusActivos[1])
+							r.menusActivos[1] = false;
+						
+						do {
+							
+							r.opcionVarios = OpcionesTipo.VOLVER_MENU_PRINCIPAL;
+							r.validarRespuesta();
+							
+							if (r.respuesta.equalsIgnoreCase("s")) {
+								r.continuarGuia = false;
+								r.opcionGuia = 0;
+								break;
+							} else {
+								r.opcionEjercicio = 0;
+							}							
+							
+						} while (r.temp.equals("s"));						
 
-					} else if (r.opcionEjercicio == r.finEjercicio) {
-
-						r.menusActivos[1] = false;
-						r.continuarEjercicio = true;
-						r.opcionVarios = OpcionesTipo.VOLVER_MENU_PRINCIPAL;						
-						r.validarRespuesta();
-//						
-//						
-//						opcion = OpcionesTipo.VOLVER_MENU_PRINCIPAL;
-//						r.mensaje = "\n¿Deseas volver al menu principal? (s/n): ";
-//						System.out.print(r.mensaje);
-//						r.temp = in.next();
-//						r.respuesta = r.verficarRespuesta(opcion);
-
-						if (r.respuesta.equalsIgnoreCase("s")) {
-							r.continuarGuia = false;
-							r.opcionGuia = 0;
-							break;
-						} else {
-							r.opcionEjercicio = 0;
+					} else if (r.opcionEjercicio < r.inicioEjercicio || r.opcionEjercicio > r.finEjercicio) {
+						
+						if (r.opcionEjercicio != 0){
+							
+							System.out.print("\n*****************************\ningrese un valor valido [" + r.inicioEjercicio + "-"
+									+ r.finEjercicio + "]\n*****************************\n");
+							
+						} else{
+							r.menusActivos[1] = true;
+							r.opcionMenu = OpcionesTipo.OPCION_EJERCICIO;
+							r.solicitarOpcion(r.opcionMenu);
 						}
 
 					} else {
@@ -141,7 +147,7 @@ public class Run {
 								case 1:
 									r.entradas = new float[2];
 									r.resultados = new float[1];
-									r.tipoOpcion = "valor";
+									//r.tipoOpcion = "valor";
 									System.out.print("\ningrese primer valor: ");
 									r.temp = in.next();
 
@@ -154,7 +160,7 @@ public class Run {
 											r.resultadoUnico);
 									break;
 								case 2:
-									r.tipoOpcion = "radio";
+									//r.tipoOpcion = "radio";
 									r.rangoInicial = 0.1f;
 									System.out.print("\ningrese radio de circunferencia (mt): ");
 									r.temp = in.next();
@@ -185,7 +191,7 @@ public class Run {
 
 									break;
 								case 4:
-									r.tipoOpcion = "horasTrabajadas";
+									//r.tipoOpcion = "horasTrabajadas";
 									r.rangoInicial = 0;
 									System.out.print("\ningrese horas trabajadas, durante el mes: ");
 									r.temp = in.next();
@@ -196,7 +202,7 @@ public class Run {
 											r.entradaUnica, r.resultadoUnico);
 									break;
 								case 5:
-									r.tipoOpcion = "gradosCelsius";
+									//r.tipoOpcion = "gradosCelsius";
 									System.out.print("\ningrese cantidad de grados celsius a convertir: ");
 									r.temp = in.next();
 									r.entradaUnica = r.verificarValor(r.temp);
@@ -207,7 +213,7 @@ public class Run {
 									break;
 								case 6:
 									r.entradas = new float[3];
-									r.tipoOpcion = "valor";
+									//r.tipoOpcion = "valor";
 									System.out.print("\ningrese primer valor: ");
 									r.temp = in.next();
 									r.entradas[0] = r.verificarValor(r.temp);
@@ -227,7 +233,7 @@ public class Run {
 									break;
 								case 7:
 									r.resultados = new float[2];
-									r.tipoOpcion = "radio";
+									//r.tipoOpcion = "radio";
 									System.out.print("\ningrese radio (mt): ");
 									r.temp = in.next();
 									r.entradaUnica = r.verificarValor(r.temp);
@@ -238,7 +244,7 @@ public class Run {
 									break;
 								case 8:
 									r.rangoInicial = 0.1f;
-									r.tipoOpcion = "dolares";
+									//r.tipoOpcion = "dolares";
 									System.out.print("\ningrese cantidad de dolares a convertir: ");
 									r.temp = in.next();
 									r.entradaUnica = r.verificarValor(r.temp, r.rangoInicial, null);
@@ -248,11 +254,11 @@ public class Run {
 									break;
 								case 9:
 									r.entradas = new float[2];
-									r.tipoOpcion = "base";
+									//r.tipoOpcion = "base";
 									System.out.print("\ningrese base (mt): ");
 									r.temp = in.next();
 									r.entradas[0] = r.verificarValor(r.temp);
-									r.tipoOpcion = "altura";
+									//r.tipoOpcion = "altura";
 									System.out.print("\ningrese altura (mt): ");
 									r.temp = in.next();
 									r.entradas[1] = r.verificarValor(r.temp);
@@ -265,7 +271,7 @@ public class Run {
 									r.rangoInicial = 1f;
 									r.rangoFinal = 7f;
 									r.entradas = new float[4];
-									r.tipoOpcion = "nota";
+									//r.tipoOpcion = "nota";
 									System.out.println();
 									for (int i = 0; i < 4; i++) {
 
@@ -285,12 +291,12 @@ public class Run {
 									break;
 								case 11:
 									r.entradas = new float[2];
-									r.tipoOpcion = "base";
+									//r.tipoOpcion = "base";
 									r.rangoInicial = 0.1f;
 									System.out.print("\ningrese base (mt): ");
 									r.temp = in.next();
 									r.entradas[0] = r.verificarValor(r.temp, r.rangoInicial, null);
-									r.tipoOpcion = "altura";
+									//r.tipoOpcion = "altura";
 									do {
 										System.out.print("ingrese altura (mt): ");
 										r.temp = in.next();
@@ -308,12 +314,12 @@ public class Run {
 									break;
 								case 12:
 									r.entradas = new float[2];
-									r.tipoOpcion = "peso";
+									//r.tipoOpcion = "peso";
 									r.rangoInicial = 0.1f;
 									System.out.print("\ningrese peso (kg): ");
 									r.temp = in.next();
 									r.entradas[0] = r.verificarValor(r.temp, r.rangoInicial, null);
-									r.tipoOpcion = "altura";
+									//r.tipoOpcion = "altura";
 									System.out.print("\ningrese altura (mt): ");
 									r.temp = in.next();
 									r.entradas[1] = r.verificarValor(r.temp, r.rangoInicial, null);
@@ -333,7 +339,7 @@ public class Run {
 								switch (r.opcionEjercicio) {
 
 								case 1:
-									r.tipoOpcion = "edad";
+									//r.tipoOpcion = "edad";
 									r.rangoInicial = 1f;
 									System.out.print("\ningrese edad: ");
 									r.temp = in.next();
@@ -345,7 +351,7 @@ public class Run {
 											(int) r.entradaUnica);
 									break;
 								case 2:
-									r.tipoOpcion = "valor";
+									//r.tipoOpcion = "valor";
 									System.out.print("\ningrese valor: ");
 									r.temp = in.next();
 									r.entradaUnica = r.verificarValor(r.temp);
@@ -353,7 +359,7 @@ public class Run {
 											: "\n《 %.2f es un valor impar 》\n", r.entradaUnica);
 									break;
 								case 3:
-									r.tipoOpcion = "nota";
+									//r.tipoOpcion = "nota";
 									r.rangoInicial = 1f;
 									r.rangoFinal = 7f;
 									System.out.print("\ningrese promedio de nota final: ");
@@ -367,7 +373,7 @@ public class Run {
 									break;
 								case 4:
 									r.entradas = new float[2];
-									r.tipoOpcion = "opcion";
+									//r.tipoOpcion = "opcion";
 									r.rangoInicial = 1f;
 									r.rangoFinal = 2f;
 
@@ -407,11 +413,11 @@ public class Run {
 								case 6:
 									r.rangoInicial = 0.1f;
 									r.entradas = new float[2];
-									r.tipoOpcion = "horasTrabajadas";
+									//r.tipoOpcion = "horasTrabajadas";
 									System.out.print("\ningrese horas trabajadas: ");
 									r.temp = in.next();
 									r.entradas[0] = r.verificarValor(r.temp, r.rangoInicial, null);
-									r.tipoOpcion = "valorHora";
+									//r.tipoOpcion = "valorHora";
 									System.out.print("ingrese valor de hora: ");
 									r.temp = in.next();
 									r.entradas[1] = r.verificarValor(r.temp, r.rangoInicial, null);
@@ -431,7 +437,7 @@ public class Run {
 									break;
 								case 7:
 									r.entradas = new float[2];
-									r.tipoOpcion = "opcion";
+									//r.tipoOpcion = "opcion";
 									r.rangoInicial = 1f;
 									r.rangoFinal = 2f;
 
@@ -455,7 +461,7 @@ public class Run {
 											r.entradas[1], r.resultadoUnico);
 									break;
 								case 8:
-									r.tipoOpcion = "nota";
+									//r.tipoOpcion = "nota";
 									r.entradas = new float[4];
 									r.rangoInicial = 1f;
 									r.rangoFinal = 7f;
@@ -477,7 +483,7 @@ public class Run {
 											r.resultados[4], respuestaTemporal, r.resultados[4]);
 									break;
 								case 9:
-									r.tipoOpcion = "opcion";
+									//r.tipoOpcion = "opcion";
 									r.entradas = new float[3];
 									r.rangoInicial = 1f;
 									r.rangoFinal = 4f;
@@ -490,7 +496,7 @@ public class Run {
 
 									System.out.println();
 									for (int i = 1; i < 3; i++) {
-										r.tipoOpcion = "valor";
+										//r.tipoOpcion = "valor";
 										System.out.print("ingrese valor " + i + ": ");
 										r.temp = in.next();
 										r.entradas[i] = r.verificarValor(r.temp);
@@ -498,7 +504,7 @@ public class Run {
 										if (r.entradas[i] == 0) {
 
 											do {
-												r.tipoOpcion = "denominador";
+												//r.tipoOpcion = "denominador";
 												System.out.println(
 														"\n******************************\nno se puede dividir entre cero\n******************************\n");
 												System.out.print("ingrese nuevo denominador: ");
@@ -533,7 +539,7 @@ public class Run {
 
 									break;
 								case 10:
-									r.tipoOpcion = "angulo";
+									//r.tipoOpcion = "angulo";
 									r.entradas = new float[3];
 									r.rangoInicial = 0.1f;
 									r.rangoFinal = 180f;
@@ -552,7 +558,7 @@ public class Run {
 
 									break;
 								case 11:
-									r.tipoOpcion = "diaSemana";
+									//r.tipoOpcion = "diaSemana";
 									System.out.print("\ningrese un dia de la semana, en valor numerico: ");
 									r.temp = in.next();
 									r.rangoInicial = 1f;
@@ -563,7 +569,7 @@ public class Run {
 											respuestaTemporal);
 									break;
 								case 12:
-									r.tipoOpcion = "opcion";
+									//r.tipoOpcion = "opcion";
 									r.entradas = new float[2];
 									r.rangoInicial = 1f;
 									r.rangoFinal = 3f;
@@ -578,31 +584,31 @@ public class Run {
 									switch ((int) r.entradaUnica) {
 
 									case 1:
-										r.tipoOpcion = "base";
+										//r.tipoOpcion = "base";
 										r.rangoInicial = 0;
 										System.out.print("ingrese base (mt): ");
 										r.temp = in.next();
 										r.entradas[0] = r.verificarValor(r.temp, r.rangoInicial, null);
-										r.tipoOpcion = "altura";
+										//r.tipoOpcion = "altura";
 										System.out.print("ingrese altura (mt): ");
 										r.temp = in.next();
 										r.entradas[1] = r.verificarValor(r.temp, r.rangoInicial, null);
 										break;
 									case 2:
-										r.tipoOpcion = "radio";
+										//r.tipoOpcion = "radio";
 										r.rangoInicial = 0;
 										System.out.print("ingrese radio (mt): ");
 										r.temp = in.next();
 										r.entradas[0] = r.verificarValor(r.temp, r.rangoInicial, null);
 										break;
 									case 3:
-										r.tipoOpcion = "base";
+										//r.tipoOpcion = "base";
 										r.rangoInicial = 0;
 										System.out.print("ingrese base (mt): ");
 										r.temp = in.next();
 										r.entradas[0] = r.verificarValor(r.temp, r.rangoInicial, null);
 										do {
-											r.tipoOpcion = "altura";
+											//r.tipoOpcion = "altura";
 											System.out.print("ingrese altura (mt): ");
 											r.temp = in.next();
 											r.entradas[1] = r.verificarValor(r.temp, r.rangoInicial, null);
@@ -641,7 +647,7 @@ public class Run {
 									break;
 								case 13:
 									r.entradas = new float[2];
-									r.tipoOpcion = "promedio";
+									//r.tipoOpcion = "promedio";
 									r.rangoInicial = 1f;
 									r.rangoFinal = 7f;
 									System.out.print("\ningrese promedio final del curso: ");
@@ -650,7 +656,7 @@ public class Run {
 
 									r.rangoInicial = 0f;
 									r.rangoFinal = 100f;
-									r.tipoOpcion = "asistencia";
+									//r.tipoOpcion = "asistencia";
 									System.out.print("ingrese asistencia en (%): ");
 									r.temp = in.next();
 									r.entradas[1] = r.verificarValor(r.temp, r.rangoInicial, r.rangoFinal);
@@ -693,7 +699,7 @@ public class Run {
 												+ " (p1 < p2) 》\n");
 									break;
 								case 15:
-									r.tipoOpcion = "valor";
+									//r.tipoOpcion = "valor";
 									r.entradas = new float[2];
 									System.out.print("\ningrese primer valor: ");
 									r.temp = in.next();
@@ -715,7 +721,7 @@ public class Run {
 									break;
 								case 16:
 									r.entradas = new float[3];
-									r.tipoOpcion = "valor";
+									//r.tipoOpcion = "valor";
 									System.out.print("\ningrese valor a: ");
 									r.temp = in.next();
 									r.entradas[0] = r.verificarValor(r.temp);
@@ -740,7 +746,7 @@ public class Run {
 									break;
 								case 17:
 									float valorEntrada = 10000f;
-									r.tipoOpcion = "edad";
+									//r.tipoOpcion = "edad";
 									r.rangoInicial = 1;
 									System.out.print("\ningrese edad: ");
 									r.temp = in.next();
@@ -776,11 +782,11 @@ public class Run {
 								case 18:
 									r.entradas = new float[2];
 									r.rangoInicial = 0.1f;
-									r.tipoOpcion = "peso";
+									//r.tipoOpcion = "peso";
 									System.out.print("\ningrese peso (kg): ");
 									r.temp = in.next();
 									r.entradas[0] = r.verificarValor(r.temp, r.rangoInicial, null);
-									r.tipoOpcion = "altura";
+									//r.tipoOpcion = "altura";
 									System.out.print("ingrese altura (mt): ");
 									r.temp = in.next();
 									r.entradas[1] = r.verificarValor(r.temp, r.rangoInicial, null);
@@ -790,7 +796,7 @@ public class Run {
 									break;
 								case 19:
 									r.entradas = new float[3];
-									r.tipoOpcion = "valor";
+									//r.tipoOpcion = "valor";
 									System.out.println();
 									for (int i = 0; i < 3; i++) {
 										System.out.print("ingrese valor " + (i + 1) + ": ");
@@ -807,7 +813,7 @@ public class Run {
 									System.out.println("------------------------------");
 									break;
 								case 20:
-									r.tipoOpcion = "valor";
+									//r.tipoOpcion = "valor";
 									System.out.print("\ningrese valor: ");
 									r.temp = in.next();
 									r.entradaUnica = r.verificarValor(r.temp);
@@ -822,7 +828,7 @@ public class Run {
 								case 21:
 									r.entradas = new float[6];
 									char[] coeficientes = { 'a', 'b', 'c', 'd', 'e', 'f' };
-									r.tipoOpcion = "valor";
+									//r.tipoOpcion = "valor";
 									System.out.println();
 									for (int i = 0; i < 6; i++) {
 										System.out.print("ingrese valor " + coeficientes[i] + ": ");
@@ -854,7 +860,7 @@ public class Run {
 									break;
 								case 2:
 									r.entradas = new float[3];
-									r.tipoOpcion = "valor";
+									//r.tipoOpcion = "valor";
 									System.out.println();
 									for (int i = 0; i < 2; i++) {
 										System.out.print("ingrese valor " + (i + 1) + ": ");
@@ -874,7 +880,7 @@ public class Run {
 									break;
 								case 5:
 									valoresDinamicos = new ArrayList<Float>();
-									r.tipoOpcion = "estatura";
+									//r.tipoOpcion = "estatura";
 									r.rangoInicial = 0.1f;
 									respuestaTemporal = "";
 
@@ -911,7 +917,7 @@ public class Run {
 									}
 									break;
 								case 6:
-									r.tipoOpcion = "valor";
+									//r.tipoOpcion = "valor";
 									r.rangoInicial = 1f;
 									r.rangoFinal = 20f;
 									System.out.print("\ningrese tabla a mostrar (1-20): ");
@@ -921,7 +927,7 @@ public class Run {
 									System.out.println("\n" + respuestaTemporal);
 									break;
 								case 7:
-									r.tipoOpcion = "valor";
+									//r.tipoOpcion = "valor";
 									r.entradas = new float[2];
 									System.out.println();
 									for (int i = 0; i < 2; i++) {
@@ -934,7 +940,7 @@ public class Run {
 									break;
 								case 8:
 									valoresDinamicos = new ArrayList<Float>();
-									r.tipoOpcion = "angulo";
+									//r.tipoOpcion = "angulo";
 									r.rangoInicial = 0;
 									r.rangoFinal = 360f;
 									respuestaTemporal = "";
@@ -978,7 +984,7 @@ public class Run {
 									break;
 								case 9:
 									r.entradas = new float[10];
-									r.tipoOpcion = "valor";
+									//r.tipoOpcion = "valor";
 									System.out.println();
 									for (int i = 0; i < 10; i++) {
 										System.out.print("ingrese valor " + (i + 1) + ": ");
@@ -994,7 +1000,7 @@ public class Run {
 								case 10:
 									personas = new ArrayList<Persona>();
 									Persona usuario;
-									r.tipoOpcion = "edad";
+									//r.tipoOpcion = "edad";
 									r.rangoInicial = 1;
 									respuestaTemporal = "";
 
@@ -1052,7 +1058,7 @@ public class Run {
 									break;
 								case 11:
 									empleados = new ArrayList<Empleado>();
-									r.tipoOpcion = "nombre";
+									//r.tipoOpcion = "nombre";
 									r.rangoInicial = Empleado.SUELDO_MINIMO;
 									String[] departamentos = { "RR.HH", "contabilidad", "informatica" };
 									Empleado empleado;
@@ -1074,7 +1080,7 @@ public class Run {
 
 										empleado.setNombre(r.temp);
 
-										r.tipoOpcion = "departamento";
+										//r.tipoOpcion = "departamento";
 										do {
 											System.out.print("ingrese departamento: ");
 											r.temp = in.next();
@@ -1104,7 +1110,7 @@ public class Run {
 											break;
 										}
 
-										r.tipoOpcion = "sueldo";
+										//r.tipoOpcion = "sueldo";
 										System.out.print("ingrese sueldo: ");
 										r.temp = in.next();
 										empleado.setSueldo(r.verificarValor(r.temp, r.rangoInicial, null));
@@ -1138,7 +1144,7 @@ public class Run {
 											r.resultados[0], r.resultados[1]);
 									break;
 								case 12:
-									r.tipoOpcion = "nota";
+									//r.tipoOpcion = "nota";
 									r.rangoInicial = 1f;
 									r.rangoFinal = 7f;
 									r.entradas = new float[4];
@@ -1160,7 +1166,7 @@ public class Run {
 									break;
 								case 13:
 									r.entradas = new float[2];
-									r.tipoOpcion = "opcion";
+									//r.tipoOpcion = "opcion";
 									r.rangoInicial = 1f;
 									r.rangoFinal = 2f;
 
@@ -1193,7 +1199,7 @@ public class Run {
 									// {{1f,2f,3f,0,5f,6f,0},{0,6f,5f,4f,3f,2f,1f},{1f,2f,3f,4f,5f,6f,7f},{7f,6f,0,4f,0,2f,0}};
 
 									float[][] lluvias = new float[zonas][zona];
-									r.tipoOpcion = "lluvia";
+									//r.tipoOpcion = "lluvia";
 									r.rangoInicial = 0;
 									for (int i = 0; i < zonas; i++) {
 										System.out.println("\n\t\t\tZONA " + (i + 1) + "\n");
@@ -1219,7 +1225,7 @@ public class Run {
 									respuestaTemporal = "";
 									long[] resultadosFulmigaciones;
 									r.entradas = new float[2];
-									r.tipoOpcion = "opcion";
+									//r.tipoOpcion = "opcion";
 									r.rangoInicial = 1f;
 									r.rangoFinal = 3f;
 									ArrayList<float[]> fulmigaciones = new ArrayList<float[]>();
@@ -1232,7 +1238,7 @@ public class Run {
 										r.temp = in.next();
 										r.entradas[0] = r.verificarValor(r.temp, (int) r.rangoInicial,
 												(int) r.rangoFinal);
-										r.tipoOpcion = "hectarea";
+										//r.tipoOpcion = "hectarea";
 										r.rangoInicial = 1f;
 										System.out.print("ingrese cantidad de hectareas a fulmigar (mt\u00b2): ");
 										r.temp = in.next();
@@ -1274,14 +1280,14 @@ public class Run {
 
 									break;
 								case 16:
-									r.tipoOpcion = "cantidadAlumno";
+									//r.tipoOpcion = "cantidadAlumno";
 									r.rangoInicial = 1f;
 									r.rangoFinal = 7f;
 									System.out.print("\ningrese cantidad de alumnos a evaluar: ");
 									r.temp = in.next();
 									r.entradaUnica = r.verificarValor(r.temp, r.rangoInicial, r.rangoFinal);
 									r.entradas = new float[(int) r.entradaUnica];
-									r.tipoOpcion = "promedio";
+									//r.tipoOpcion = "promedio";
 									respuestaTemporal = "\n------------------------------------------------\npromedios ingresados: ";
 									System.out.println();
 									for (int i = 0; i < (int) r.entradaUnica; i++) {
@@ -1304,7 +1310,7 @@ public class Run {
 
 									do {
 										empleado = new Empleado();
-										r.tipoOpcion = "horasTrabajadas";
+										//r.tipoOpcion = "horasTrabajadas";
 										r.rangoInicial = 0;
 										System.out.print("\ningrese cantidad de horas trabajadas en el mes: ");
 										r.temp = in.next();
@@ -1312,7 +1318,7 @@ public class Run {
 										r.rangoInicial = Empleado.SUELDO_MINIMO / Empleado.HORAS_LEGALES;
 
 										do {
-											r.tipoOpcion = "valorHora";
+											//r.tipoOpcion = "valorHora";
 											System.out.print("ingrese valor hora trabajada: ");
 											r.temp = in.next();
 											empleado.setValorHora(r.verificarValor(r.temp));
@@ -1348,7 +1354,7 @@ public class Run {
 									r.rangoFinal = 360f;
 									float[][] triangulos = new float[filas][columnas];
 									ArrayList<float[]> triangulosRectangulos = new ArrayList<float[]>();
-									r.tipoOpcion = "cateto";
+									//r.tipoOpcion = "cateto";
 
 									for (int i = 0; i < triangulos.length; i++) {
 
@@ -1361,7 +1367,7 @@ public class Run {
 											if (j == 1)
 												System.out.print("ingrese cateto B: ");
 											else if (j == 2) {
-												r.tipoOpcion = "hipotenusa";
+												//r.tipoOpcion = "hipotenusa";
 												System.out.print("ingrese hipotenusa: ");
 											}
 
@@ -1408,7 +1414,7 @@ public class Run {
 								switch (r.opcionEjercicio) {
 
 								case 1:
-									r.tipoOpcion = "valor";
+									//r.tipoOpcion = "valor";
 									longitud = 3;
 									a = new int[longitud];
 									b = new int[longitud];
@@ -1456,7 +1462,7 @@ public class Run {
 									System.out.println(respuestaTemporal);
 									break;
 								case 2:
-									r.tipoOpcion = "valor";
+									//r.tipoOpcion = "valor";
 									longitud = 20;
 									r.entradas = new float[longitud];
 									contIndice = 0;
@@ -1502,7 +1508,7 @@ public class Run {
 									float[] pesos = new float[longitud];
 									float[] estaturas = new float[longitud];
 
-									r.tipoOpcion = "peso";
+									//r.tipoOpcion = "peso";
 									r.rangoInicial = 1f;
 
 									for (int i = 0; i < longitud; i++) {
@@ -1524,7 +1530,7 @@ public class Run {
 										r.temp = in.next();
 										pesos[i] = r.verificarValor(r.temp, r.rangoInicial, null);
 
-										r.tipoOpcion = "estatura";
+										//r.tipoOpcion = "estatura";
 										System.out.print("ingrese estatura (mt): ");
 										r.temp = in.next();
 										estaturas[i] = r.verificarValor(r.temp, r.rangoInicial, null);
@@ -1550,7 +1556,7 @@ public class Run {
 									System.out.println(respuestaTemporal);
 									break;
 								case 4:
-									r.tipoOpcion = "valor";
+									//r.tipoOpcion = "valor";
 									longitud = 3;
 									a = new int[longitud];
 									b = new int[longitud];
@@ -1602,7 +1608,7 @@ public class Run {
 									longitud = 1;
 									empleados = new ArrayList<Empleado>();
 									Empleado empleado = null;
-									r.tipoOpcion = "nombre";
+									//r.tipoOpcion = "nombre";
 									r.rangoInicial = 1f;
 									String[] datos;
 
@@ -1624,20 +1630,20 @@ public class Run {
 										} while (r.temp.trim().length() < 3);
 										empleado.setNombre(r.temp);
 
-										r.tipoOpcion = "edad";
+										//r.tipoOpcion = "edad";
 										r.rangoInicial = 1f;
 										System.out.print("ingrese edad del empleado: ");
 										r.temp = in.next();
 										empleado.setEdad((int) r.verificarValor(r.temp, r.rangoInicial, null));
 
 										r.rangoInicial = 0;
-										r.tipoOpcion = "horasTrabajadas";
+										//r.tipoOpcion = "horasTrabajadas";
 										r.rangoInicial = 0;
 										System.out.print("ingrese horas trabajadas: ");
 										r.temp = in.next();
 										empleado.setHorastrabajadas(r.verificarValor(r.temp, r.rangoInicial, null));
 
-										r.tipoOpcion = "valorHora";
+										//r.tipoOpcion = "valorHora";
 										System.out.print("ingrese valor hora: ");
 										r.rangoInicial = Empleado.SUELDO_MINIMO / Empleado.HORAS_LEGALES;
 										r.temp = in.next();
@@ -1745,7 +1751,7 @@ public class Run {
 										for (int j = 0; j < columnas; j++) {
 
 											r.rangoInicial = 0;
-											r.tipoOpcion = "valor";
+											//r.tipoOpcion = "valor";
 
 											System.out.print("cantidad producida en turno " + (j + 1) + ": ");
 											r.temp = in.next();
@@ -1805,7 +1811,7 @@ public class Run {
 						}
 					}
 
-				}
+				}while (r.continuarGuia);
 				;
 			}
 		} while (r.continuarJuego);
@@ -1813,9 +1819,8 @@ public class Run {
 		System.out.println("\nDesarrollado por Oscar Pino 2023");
 	}
 	
-	/**
-	 * Devuelve el ejercicio final de cada guia.
-	 * @return opción a utilizar para volver al menu principal.
+	/**	 
+	 * @return Devuelve el indice del ejercicio final de cada guia.
 	 */
 
 	public int obtenerFinalEjercicio() {
@@ -1841,7 +1846,7 @@ public class Run {
 	}
 	
 	/**
-	 * Verifica que la respuesta a cada pregunta realizada por el programa, sea correcta (s ó n).
+	 * Verifica que la respuesta sea correcta (s ó n).
 	 */
 
 	public void verficarRespuesta() {
@@ -1873,7 +1878,7 @@ public class Run {
 	 * 
 	 * if (!respuesta.equalsIgnoreCase("s") && !respuesta.equalsIgnoreCase("n")) {
 	 * 
-	 * mostrarMenu(tipoOpcion);
+	 * mostrarMenu(//tipoOpcion);
 	 * 
 	 * System.out.print(
 	 * "\n***************************\ningrese opcion valida (s|n)\n***************************\n"
@@ -1883,8 +1888,8 @@ public class Run {
 	 */
 
 	/**
-	 * Muestra los distintos tipos de menu, existentes en el programa.
-	 * @param tipo define que tipo de menu debe mostrar, Menu Princiapal o Menu Ejercicio.
+	 * Muestra los distintos tipos de menu que se muestran en el programa
+	 * @param tipo de menu a mostrar.
 	 */
 	public void mostrarMenu(OpcionesTipo tipo) {
 
@@ -1922,15 +1927,15 @@ public class Run {
 	
 	/**
 	 * 
-	 * @param Verifica que num, sea un valor numerico.
-	 * @return Devuelve true si num se convierte a float, false en caso contrario.
+	 * @param valor a verificar el tipo de dato
+	 * @return Devuelve true si valor es numerico, false en caso contrario.
 	 */
 
-	public boolean isNum(String num) {
+	public boolean isNum(String valor) {
 
 		try {
 
-			Float.parseFloat(num);
+			Float.parseFloat(valor);
 			return true;
 
 		} catch (Exception e) {
@@ -1953,7 +1958,7 @@ public class Run {
 		while (!isNum(textoNumerico)) {
 			
 				mostrarMenu(opcionMenu);
-				System.out.println("\n********************\ningrese solo numeros\n********************\n");
+				System.out.println("\n********************\ningrese solo numeros\n********************");
 			
 				opcionVarios = OpcionesTipo.VALOR;
 				
@@ -1987,10 +1992,10 @@ public class Run {
 
 				if (rangoMinimo instanceof Integer)
 					System.out.println("\n***********************************\ningrese un valor mayor o igual a "
-							+ (int) rangoMinimo + "\n***********************************\n");
+							+ (int) rangoMinimo + "\n***********************************");
 				else
 					System.out.println("\n***********************************\ningrese un valor mayor o igual a "
-							+ rangoMinimo + "\n***********************************\n");
+							+ rangoMinimo + "\n***********************************");
 
 				obtenerMensaje();
 				textoNumerico = in.next();
@@ -2005,10 +2010,10 @@ public class Run {
 
 				if (rangoMinimo instanceof Integer)
 					System.out.println("\n***********************************\ningrese un valor menor o igual a "
-							+ (int) rangoMaximo + "\n***********************************\n");
+							+ (int) rangoMaximo + "\n***********************************");
 				else
 					System.out.println("\n***********************************\ningrese un valor menor o igual a "
-							+ rangoMaximo + "\n***********************************\n");
+							+ rangoMaximo + "\n***********************************");
 
 				obtenerMensaje();
 				textoNumerico = in.next();
@@ -2025,22 +2030,22 @@ public class Run {
 					System.out.println(
 							"\n********************************************\ningrese un valor dentro del rango ["
 									+ rangoMinimo.intValue() + " - " + rangoMaximo.floatValue() + "]"
-									+ "\n********************************************\n");
+									+ "\n********************************************");
 				else if (rangoMinimo instanceof Float && rangoMaximo instanceof Integer)
 					System.out.println(
 							"\n********************************************\ningrese un valor dentro del rango ["
 									+ rangoMinimo.floatValue() + " - " + rangoMaximo.intValue() + "]"
-									+ "\n********************************************\n");
+									+ "\n********************************************");
 				else if (rangoMinimo instanceof Integer && rangoMaximo instanceof Integer)
 					System.out
 							.println("\n******************************************\ningrese un valor dentro del rango ["
 									+ rangoMinimo.intValue() + " - " + rangoMaximo.intValue() + "]"
-									+ "\n******************************************\n");
+									+ "\n******************************************");
 				else
 					System.out.println(
 							"\n**********************************************\ningrese un valor dentro del rango ["
 									+ rangoMinimo.floatValue() + " - " + rangoMaximo.floatValue() + "]"
-									+ "\n**********************************************\n");
+									+ "\n**********************************************");
 
 				obtenerMensaje();
 				textoNumerico = in.next();
@@ -2062,7 +2067,7 @@ public class Run {
 	 * while (nuevoValor < rangoMinimo.floatValue() || (int)nuevoValor <
 	 * rangoMinimo.intValue()) {
 	 * 
-	 * mostrarMenu(tipoOpcion);
+	 * mostrarMenu(//tipoOpcion);
 	 * 
 	 * if (rangoMinimo instanceof Integer) System.out.
 	 * println("\n*****************************\ningrese un valor mayor o igual a" +
@@ -2078,7 +2083,7 @@ public class Run {
 	 * while (nuevoValor > rangoMaximo.floatValue() || (int)nuevoValor >
 	 * rangoMaximo.intValue()) {
 	 * 
-	 * mostrarMenu(tipoOpcion);
+	 * mostrarMenu(//tipoOpcion);
 	 * 
 	 * if (rangoMinimo instanceof Integer) System.out.
 	 * println("\n*****************************\ningrese un valor menor o igual a" +
@@ -2086,14 +2091,14 @@ public class Run {
 	 * println("\n*****************************\ningrese un valor menor o igual a" +
 	 * rangoMaximo + "\n*****************************\n");
 	 * 
-	 * obtenerMensaje(tipoOpcion); textoNumerico = in.next(); nuevoValor =
+	 * obtenerMensaje(//tipoOpcion); textoNumerico = in.next(); nuevoValor =
 	 * verificarValor(textoNumerico); } }else {
 	 * 
 	 * while ((int)nuevoValor < rangoMinimo.intValue() || (int)nuevoValor >
 	 * rangoMaximo.intValue() || nuevoValor < rangoMinimo.floatValue() || nuevoValor
 	 * > rangoMaximo.floatValue()) {
 	 * 
-	 * mostrarMenu(tipoOpcion);
+	 * mostrarMenu(//tipoOpcion);
 	 * 
 	 * if (rangoMinimo instanceof Integer) System.out.
 	 * println("\n*****************************\ningrese un valor dentro del rango ["
@@ -2103,7 +2108,7 @@ public class Run {
 	 * +rangoMinimo.floatValue()+" - "+rangoMaximo.floatValue()+"]" +
 	 * "\n*****************************\n");
 	 * 
-	 * obtenerMensaje(tipoOpcion); textoNumerico = in.next(); nuevoValor =
+	 * obtenerMensaje(//tipoOpcion); textoNumerico = in.next(); nuevoValor =
 	 * verificarValor(textoNumerico); } }
 	 * 
 	 * return nuevoValor; }
@@ -2111,24 +2116,16 @@ public class Run {
 	
 	/**
 	 * 
-	 * @param args
+	 * Se obtiene el mensaje que solicita el dato al usuario
 	 */
-	public void obtenerMensaje() {
-	
-		if(menusActivos[0])
-			opcionMenu = OpcionesTipo.OPCION_GUIA;
-		else if(menusActivos[1])
-			opcionMenu = OpcionesTipo.OPCION_EJERCICIO;		
+	public void obtenerMensaje() {			
 		
 		if(menusActivos[0] || menusActivos[1])
 			System.out.print(opcionMenu.getMensajeOpcion());
 		else
-			System.out.print(opcionVarios.getMensajeOpcion());
+			System.out.print(opcionVarios.getMensajeOpcion());	
 		
-		if(menusActivos[0])
-			menusActivos[0] = false;
-		else if (menusActivos[1])
-			menusActivos[1] = false;
+		
 	}
 //	
 //	public Number obtenerTipo(Number tipo) {
@@ -2144,7 +2141,8 @@ public class Run {
 	 * @param args
 	 */
 	
-	public void validarRespuesta() {
+	public void validarRespuesta() {		
+	
 		obtenerMensaje();
 		respuesta = in.next();
 		verficarRespuesta();
@@ -2161,13 +2159,10 @@ public class Run {
 		obtenerMensaje();
 		temp = in.next();
 		
-		if (tipo.equals(OpcionesTipo.OPCION_GUIA)) {
-			opcionGuia = (int) verificarValor(temp, inicioMenu, finMenu);
-			menusActivos[0] = true;
-		}else if (tipo.equals(OpcionesTipo.OPCION_EJERCICIO)) {
-			opcionEjercicio = (int) verificarValor(temp, inicioEjercicio, finEjercicio);
-			menusActivos[1] = true;
-		}
+		if (tipo.equals(OpcionesTipo.OPCION_GUIA))
+			opcionGuia = (int) verificarValor(temp, inicioMenu, finMenu);		
+		else if (tipo.equals(OpcionesTipo.OPCION_EJERCICIO))
+			opcionEjercicio = (int) verificarValor(temp, inicioEjercicio, finEjercicio);		
 
 	}
 }
