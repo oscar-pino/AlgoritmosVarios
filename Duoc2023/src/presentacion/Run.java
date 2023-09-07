@@ -2160,8 +2160,7 @@ public class Run {
 		mostrarMenu(tipo);
 		obtenerMensaje();
 		temp = in.next();
-
-		// se realiza prueba de validacion
+		
 		if (tipo.equals(OpcionesTipo.OPCION_GUIA)) {
 			opcionGuia = (int) verificarValor(temp, inicioMenu, finMenu);
 			menusActivos[0] = true;
