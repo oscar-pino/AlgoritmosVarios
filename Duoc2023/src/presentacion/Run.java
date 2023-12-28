@@ -2165,5 +2165,16 @@ public class Run {
 			opcionEjercicio = (int) verificarValor(temp, inicioEjercicio, finEjercicio);		
 
 	}
+
+	public int[] llenarArrayPorRango(int min, int max, int[]arreglo) {
+
+		int semilla = ((max-min)+1);
+		int[] array = new int[arreglo.length];
+		
+		for(int i=0;i<array.length;i++)
+			array[i] = rd.nextInt(semilla)+min;
+		
+		return array;
+	}
 }
 
