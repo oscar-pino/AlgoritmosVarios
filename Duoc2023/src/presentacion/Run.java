@@ -2166,18 +2166,16 @@ public class Run {
 
 	}
 
-	private int[]  generaArrayAleatorioPorRango(int rangoMinimo, int rangoMaximo, int longitud) {
-
-// tener en cuenta que la longitud solicitada, debe ser la misma cantidad que se da en el rango elegido
+	private int[]  generaArrayAleatorioPorRango(int rangoMinimo, int rangoMaximo) {
 		
 		int contador = 0;
-		int[] arreglo = new int[longitud];
-		int semilla = rangoMaximo - rangoMinimo + 1;
+		int longitud = rangoMaximo - rangoMinimo + 1;
+		int[] arreglo = new int[longitud];		
 		
 		do {
 
 			int i = 0;
-			int n = rd.nextInt(semilla)+rangoMinimo;
+			int n = rd.nextInt(longitud)+rangoMinimo;
 
 			for (i = 0; i < contador; i++) {
 				
